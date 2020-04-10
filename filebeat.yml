@@ -1,0 +1,28 @@
+#=========================== Filebeat inputs =============================
+
+filebeat.inputs:
+
+    - type: log
+      enabled: true
+    
+      # Paths that should be crawled and fetched. Glob based paths.
+      paths:
+        - /home/ec2-user/logs/*.txt
+    
+    
+    processors:
+     - drop_fields:
+         fields: ["@metadata", "log", "input", "host", "agent", "ecs", "@metadata"]
+         ignore_missing: true
+    
+    #================================ Outputs =====================================
+    
+    #----------------------------- Logstash output --------------------------------
+    output.logstash:
+      # The Logstash hosts
+      hosts: ["172.31.47.36:5044"]
+    
+    
+    #----------------------------- Console output ---------------------------------
+    #output.console:
+    #  pretty: true
